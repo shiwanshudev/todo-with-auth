@@ -53,4 +53,13 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/user", auth, async (req, res) => {
+  try {
+    // The user is already added to req.user by the auth middleware
+    res.json(req.user);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 module.exports = router;

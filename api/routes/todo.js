@@ -39,7 +39,7 @@ router.post("/", auth, async (req, res) => {
       userId: req.user.id,
       text: text,
     });
-    const savedTodo = newTodo.save();
+    const savedTodo = await newTodo.save();
     res.json(savedTodo);
   } catch (e) {
     res.status(500).json({ error: e.message });

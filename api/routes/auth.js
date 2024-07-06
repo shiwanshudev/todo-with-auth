@@ -4,6 +4,23 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const router = express.Router();
 
+const auth = (req, res, next) => {
+  console.log(req.header);
+  const token = req.header("Authorization");
+  console.log("TOKEN: ", token);
+  if (!token)
+    return res.status(401).json({ message: "No token, authorization denied" });
+  try {
+    console.log("INSIDE MIDDLEWARE");
+    const decoded = jwt.verify(token.split(" ")[1], jwtSecret);
+    req.user = decoded;
+    console.log("DECODED", decoded);
+    next();
+  } catch (e) {
+    res.status(400).json({ message: "Invalid token" });
+  }
+};
+
 router.post("/register", async (req, res) => {
   const { username, password } = req.body;
   try {

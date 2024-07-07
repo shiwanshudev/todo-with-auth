@@ -12,7 +12,7 @@ const auth = (req, res, next) => {
     return res.status(401).json({ message: "No token, authorization denied" });
   try {
     console.log("INSIDE MIDDLEWARE");
-    const decoded = jwt.verify(token.split(" ")[1], jwtSecret);
+    const decoded = jwt.verify(token.split(" ")[1], process.env.JWT_SECRET);
     req.user = decoded;
     console.log("DECODED", decoded);
     next();
@@ -23,6 +23,7 @@ const auth = (req, res, next) => {
 
 router.post("/register", async (req, res) => {
   const { username, password } = req.body;
+  console.log(req.body);
   try {
     const existingUser = await User.findOne({
       username,
@@ -73,6 +74,7 @@ router.post("/login", async (req, res) => {
 router.get("/user", auth, async (req, res) => {
   try {
     // The user is already added to req.user by the auth middleware
+    console.log("DECODE TOKEN", req.user);
     res.json(req.user);
   } catch (error) {
     res.status(500).json({ message: "Server error" });

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 
@@ -12,7 +12,7 @@ const TodoProvider = ({ children }) => {
     if (user) {
       const token = localStorage.getItem("token");
       axios
-        .get("http://localhost:5000/api/todos", {
+        .get(`${import.meta.env.VITE_BASE_URL}api/todos`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
@@ -24,7 +24,7 @@ const TodoProvider = ({ children }) => {
   const addTodo = async (text) => {
     const token = localStorage.getItem("token");
     const response = await axios.post(
-      "http://localhost:5000/api/todos",
+      `${import.meta.env.VITE_BASE_URL}api/todos`,
       { text },
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -35,7 +35,7 @@ const TodoProvider = ({ children }) => {
 
   const deleteTodo = async (id) => {
     const token = localStorage.getItem("token");
-    await axios.delete(`http://localhost:5000/api/todos/${id}`, {
+    await axios.delete(`${import.meta.env.VITE_BASE_URL}api/todos/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setTodos(todos.filter((todo) => todo._id !== id));
@@ -44,7 +44,7 @@ const TodoProvider = ({ children }) => {
   const updateTodo = async (id, updatedTodo) => {
     const token = localStorage.getItem("token");
     const response = await axios.put(
-      `http://localhost:5000/api/todos/${id}`,
+      `${import.meta.env.VITE_BASE_URL}api/todos/${id}`,
       updatedTodo,
       {
         headers: { Authorization: `Bearer ${token}` },

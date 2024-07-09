@@ -1,17 +1,19 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     console.log("TOKEN AUTH CONTEXT", token);
     if (token) {
       axios
-        .get("http://localhost:5000/api/auth/user", {
+        .get(`${import.meta.env.VITE_BASE_URL}api/auth/user`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -24,16 +26,20 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (username, password) => {
-    const response = await axios.post("http://localhost:5000/api/auth/login", {
-      username,
-      password,
-    });
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}api/auth/login`,
+      {
+        username,
+        password,
+      }
+    );
     localStorage.setItem("token", response.data.token);
+    window.location.href = "/";
   };
 
   const register = async (username, password) => {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/register",
+      `${import.meta.env.VITE_BASE_URL}api/auth/register`,
       {
         username,
         password,
@@ -41,11 +47,13 @@ const AuthProvider = ({ children }) => {
     );
     localStorage.setItem("token", response.data.token);
     setUser(response.data.user);
+    window.location.href = "/";
   };
 
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
+    window.location.href = "/";
   };
 
   return (

@@ -10,36 +10,74 @@ const App = () => {
   const { user, logout } = useContext(AuthContext);
 
   return (
-    <div>
-      <nav>
-        <Link to="/">Home</Link>
-        {user ? (
-          <>
-            <button onClick={logout}>Logout</button>
-          </>
-        ) : (
-          <>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
-          </>
-        )}
+    <div className="min-h-screen flex flex-col">
+      <nav className="bg-gray-900 text-white text-sm flex w-full items-center justify-between p-4 shadow-lg fixed">
+        <div className="flex items-center gap-4">
+          <Link to="/" className="text-xl font-bold hover:text-gray-300">
+            Home
+          </Link>
+        </div>
+        <div className="flex items-center gap-4">
+          {user ? (
+            <button
+              onClick={logout}
+              className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded transition duration-300"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="hover:text-gray-300 transition duration-300"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="hover:text-gray-300 transition duration-300"
+              >
+                Register
+              </Link>
+            </>
+          )}
+        </div>
       </nav>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="/"
-          element={
-            user ? (
-              <TodoProvider>
-                <TodoList />
-              </TodoProvider>
-            ) : (
-              <div>Please login or register</div>
-            )
-          }
-        />
-      </Routes>
+      <div>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/"
+            element={
+              user ? (
+                <TodoProvider>
+                  <TodoList />
+                </TodoProvider>
+              ) : (
+                <div className="flex items-center justify-center min-h-screen">
+                  <p className="mb-4 text-lg">
+                    Please{" "}
+                    <Link
+                      to="/login"
+                      className="underline text-blue-600 hover:text-blue-800 transition duration-300"
+                    >
+                      Login
+                    </Link>{" "}
+                    or{" "}
+                    <Link
+                      to="/register"
+                      className="underline text-blue-600 hover:text-blue-800 transition duration-300"
+                    >
+                      Register
+                    </Link>
+                  </p>
+                </div>
+              )
+            }
+          />
+        </Routes>
+      </div>
     </div>
   );
 };

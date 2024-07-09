@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
 const Register = () => {
@@ -12,21 +12,33 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Register</button>
-    </form>
+    <div className="w-full min-h-screen flex items-center justify-center pt-20">
+      <form
+        onSubmit={handleSubmit}
+        className="w-72 flex flex-col items-center justify-center"
+      >
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full p-2 bg-zinc-100 my-2 rounded-md"
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-2 bg-zinc-100 my-2 rounded-md"
+        />
+        <button
+          type="submit"
+          className=" bg-blue-500 w-full text-white font-bold py-2 rounded-md mt-5"
+        >
+          Register
+        </button>
+      </form>
+    </div>
   );
 };
 

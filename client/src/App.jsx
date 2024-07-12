@@ -56,22 +56,27 @@ const App = () => {
                 </TodoProvider>
               ) : (
                 <div className="flex items-center justify-center min-h-screen">
-                  <p className="mb-4 text-lg">
-                    Please{" "}
-                    <Link
-                      to="/login"
-                      className="underline text-blue-600 hover:text-blue-800 transition duration-300"
-                    >
-                      Login
-                    </Link>{" "}
-                    or{" "}
-                    <Link
-                      to="/register"
-                      className="underline text-blue-600 hover:text-blue-800 transition duration-300"
-                    >
-                      Register
-                    </Link>
-                  </p>
+                  <div className="text-center">
+                    <h1 className="font-extrabold text-3xl lg:text-5xl text-blue-800 mb-2">
+                      SecureTasks
+                    </h1>
+                    <p className="mb-4 text-lg">
+                      Please{" "}
+                      <Link
+                        to="/login"
+                        className="underline text-blue-600 hover:text-blue-800 transition duration-300"
+                      >
+                        Login
+                      </Link>{" "}
+                      or{" "}
+                      <Link
+                        to="/register"
+                        className="underline text-blue-600 hover:text-blue-800 transition duration-300"
+                      >
+                        Register
+                      </Link>
+                    </p>
+                  </div>
                 </div>
               )
             }

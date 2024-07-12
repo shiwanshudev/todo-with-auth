@@ -17,7 +17,7 @@ const auth = (req, res, next) => {
     console.log("DECODED", decoded);
     next();
   } catch (e) {
-    res.status(400).json({ message: "Invalid token" });
+    return res.status(400).json({ message: "Invalid token" });
   }
 };
 
@@ -54,20 +54,20 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ username });
     if (!user) {
-      res.status(400).json({ message: "Invalid username or password!" });
+      return res.status(400).json({ message: "Invalid username or password!" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       // isMatch is false
-      res.status(400).json({ message: "Invalid username or password!" });
+      return res.status(400).json({ message: "Invalid username or password!" });
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.status(200).json({ token });
+    return res.status(200).json({ token });
   } catch (e) {
-    res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -75,9 +75,9 @@ router.get("/user", auth, async (req, res) => {
   try {
     // The user is already added to req.user by the auth middleware
     console.log("DECODE TOKEN", req.user);
-    res.json(req.user);
+    return res.json(req.user);
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Server error" });
   }
 });
 

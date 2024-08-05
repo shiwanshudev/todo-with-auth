@@ -8,13 +8,13 @@ import TodoList from "./components/TodoList";
 
 const App = () => {
   const { user, logout } = useContext(AuthContext);
-
+  console.log(user);
   return (
     <div className="min-h-screen flex flex-col">
       <nav className="bg-gray-900 text-white text-sm flex w-full items-center justify-between p-4 shadow-lg fixed">
         <div className="flex items-center gap-4">
           <Link to="/" className="text-xl font-bold hover:text-gray-300">
-            Home
+            {user ? `Welcome ${user.username}!` : "Home"}
           </Link>
         </div>
         <div className="flex items-center gap-4">

@@ -21,7 +21,7 @@ const connectDB = async () => {
 
 connectDB();
 
-app.get("/", (req, res) => {
+app.use("/", (req, res) => {
   res.status(200).json({ message: "Hello World" });
 });
 app.use("/api/auth", authRoutes);

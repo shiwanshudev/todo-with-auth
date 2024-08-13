@@ -21,9 +21,9 @@ const connectDB = async () => {
 
 connectDB();
 
-app.use("/", (req, res) => {
-  res.status(200).json({ message: "Hello World" });
-});
+// app.use("/", (req, res) => {
+//   res.status(200).json({ message: "Hello World" });
+// });
 app.use("/api/auth", authRoutes);
 app.use("/api/todos", todoRoutes);
 
